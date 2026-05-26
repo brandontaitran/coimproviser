@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>coimproviser v1</title>
+  <style>body { margin: 0; }</style>
+</head>
+<body>
+  <div id="root"></div>
+  <!-- Magenta.js dependency chain (must load in this exact order):
+       1. TF.js 2.x      → window.tf    (peer dep of @magenta/music@1.23.1)
+       2. Tone.js 14.x   → window.Tone  (peer dep of core.js)
+       3. core.js        → window.core  (base Magenta utilities)
+       4. music_rnn.js   → window.music_rnn  (contains MusicRNN)  -->
+  <script>
+    window.__magentaReady = new Promise((resolve, reject) => {
+      function loadScript(src) {
+        return new Promise((res, rej) => {
+          const s = document.createElement('script');
+          s.src = src;
+          s.onload = res;
+          s.onerror = () => rej(new Error('Failed to load: ' + src));
+          document.head.appendChild(s);
+        });
+      }
+      const mm = 'https://cdn.jsdelivr.net/npm/@magenta/music@1.23.1/es6/';
+      loadScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.7.0/dist/tf.min.js')
+        .then(() => loadScript('https://cdn.jsdelivr.net/npm/tone@14.7.58/build/Tone.js'))
+        .then(() => loadScript(mm + 'core.js'))
+        .then(() => loadScript(mm + 'music_rnn.js'))
+        .then(() => resolve(window.music_rnn))
+        .catch(reject);
+    });
+  </script>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>
