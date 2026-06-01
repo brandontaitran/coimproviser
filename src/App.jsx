@@ -14,7 +14,11 @@ export function App() {
         freeGenRunning, startFreeGen, stopFreeGen,
         reset,
         noteCallbackRef,
-        magentaStatus,
+        model, switchModel, magentaStatus, improvStatus,
+        sessionRunning, sessionNoteCount,
+        startSession, stopSession, exportSession, clearSession,
+        currentChord, progression, detectedKey,
+        harmonyStatus, connectHarmony, disconnectHarmony,
     } = useNotochord();
 
     const [resetFlash, setResetFlash] = useState(false);
@@ -25,7 +29,8 @@ export function App() {
         setTimeout(() => setResetFlash(false), 300);
     }, [reset]);
 
-    const modelReady = magentaStatus === 'ready';
+    const activeStatus = model === 'magenta' ? magentaStatus : improvStatus;
+    const modelLabel   = model === 'magenta' ? 'MelodyRNN' : 'ImprovRNN';
 
     return (
         <div className="app">
@@ -34,16 +39,28 @@ export function App() {
             <div className="ui-overlay">
                 <div className="top-bar">
                     {/* Top-left: controls */}
-                    <Controls controls={controls} setControls={setControls}
+                    <Controls
+                        controls={controls} setControls={setControls}
                         ccBindings={ccBindings} learning={learning}
-                        startLearning={startLearning} unbind={unbind} />
+                        startLearning={startLearning} unbind={unbind}
+                        model={model} switchModel={switchModel}
+                        magentaStatus={magentaStatus} improvStatus={improvStatus}
+                        sessionRunning={sessionRunning} sessionNoteCount={sessionNoteCount}
+                        startSession={startSession} stopSession={stopSession}
+                        exportSession={exportSession} clearSession={clearSession}
+                        currentChord={currentChord}
+                        progression={progression} detectedKey={detectedKey}
+                        harmonyStatus={harmonyStatus}
+                        connectHarmony={connectHarmony}
+                        disconnectHarmony={disconnectHarmony}
+                    />
 
                     {/* Top-right: title + model status */}
                     <div className="top-right">
                         <div className="title-row">
                             <span className="app-title">coimproviser v1</span>
-                            <div className={`ws-dot ${modelReady ? 'ok' : 'off'}`}
-                                title={`MelodyRNN: ${magentaStatus}`} />
+                            <div className={`ws-dot ${activeStatus === 'ready' ? 'ok' : 'off'}`}
+                                title={`${modelLabel}: ${activeStatus}`} />
                         </div>
                     </div>
                 </div>

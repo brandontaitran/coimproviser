@@ -394,3 +394,87 @@ body {
     outline: none;
 }
 .q-subdiv:focus { border-color: var(--accent); }
+
+/* Session recording */
+.session-btns {
+    display: flex;
+    gap: 0.3rem;
+    margin-top: 0.15rem;
+}
+.ctrl-btn {
+    flex: 1;
+    padding: 0.28rem 0.4rem;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--dim);
+    font-family: inherit;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.ctrl-btn:hover:not(:disabled) { color: var(--text); border-color: var(--dim); }
+.ctrl-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.ctrl-btn.active {
+    border-color: var(--red);
+    color: var(--red);
+    animation: pulse 1.4s ease-in-out infinite;
+}
+.ctrl-btn.export:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.session-count {
+    font-size: 0.68rem;
+    color: var(--dim);
+    text-align: right;
+    padding: 0.1rem 0;
+}
+
+/* Current chord readout (ImprovRNN auto-detect) */
+.chord-readout {
+    font-size: 0.7rem;
+    color: var(--dim);
+    padding: 0.1rem 0 0.15rem;
+}
+.chord-name {
+    color: var(--accent);
+    font-weight: 600;
+    margin-left: 0.3rem;
+}
+
+/* Harmony engine row */
+.harmony-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0 0.1rem;
+    font-size: 0.68rem;
+}
+.harmony-lbl { color: var(--dim); flex: 1; }
+.harmony-pill {
+    font-size: 0.6rem;
+    padding: 0.07rem 0.35rem;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.harmony-pill.connected  { border-color: var(--green);  color: var(--green); }
+.harmony-pill.connecting { border-color: var(--accent); color: var(--accent); animation: pulse 1s ease-in-out infinite; }
+.harmony-pill.offline    { border-color: var(--red);    color: var(--red); }
+.harmony-btn {
+    font-size: 0.6rem;
+    padding: 0.07rem 0.4rem;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--dim);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+}
+.harmony-btn:hover { color: var(--text); border-color: var(--dim); }
+.harmony-key {
+    font-size: 0.65rem;
+    color: var(--dim);
+    padding: 0.05rem 0;
+}
